@@ -91,7 +91,7 @@ const removeNote = (id) => {
         } else {
             notes.splice(notes.indexOf(note), 1);
             saveNotes(notes);
-            console.log(notes);
+            console.log(chalk.green.inverse('Заметка успешно удалена'));
         }
     });
 };
