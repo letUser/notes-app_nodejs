@@ -5,6 +5,11 @@ yargs.command({
     command: 'create',
     describe: 'создать заметку',
     builder: {
+        id: {
+            type: 'string',
+            demandOption: true,
+            describe: 'Номер заметки'
+        },
         title: {
             type: 'string',
             demandOption: true,
@@ -16,16 +21,28 @@ yargs.command({
             describe: 'Текс заметки'
         }
     },
-    handler({title, text}) {
-        notes.addNote(title, text);
+    handler({
+        id,
+        title,
+        text
+    }) {
+        notes.addNote(id, title, text);
+    }
+});
+
+yargs.command({
+    command: 'list',
+    describe: 'показать заметки',
+    handler() {
+        notes.listNotes();
     }
 });
 
 yargs.command({
     command: 'read',
-    describe: 'показать контект заметки',
-    handler() {
-        console.log('read');
+    describe: 'показать контент заметки',
+    handler(title) {
+        notes.readNote(title);
     }
 });
 
