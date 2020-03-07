@@ -2,8 +2,10 @@ const chalk = require("chalk");
 const fs = require('fs');
 const path = require('path');
 
-const notePath = path.join(__dirname, 'notes.json');
+const notePath = path.join(__dirname, 'notes.json'); //inst path //устанавливаем путь
 
+/* func to parse notes.json to get notes */
+/* функ парсинга notes.json чтобы получить массив заметок */
 const getNotes = (callback) => {
     fs.readFile(notePath, 'utf-8', (err, content) => {
         if (err) {
@@ -18,6 +20,8 @@ const getNotes = (callback) => {
     });
 };
 
+/* func to re-write notes.json with new notes */
+/* функ перезаписи notes.json обновленным массивом */
 const saveNotes = (content) => {
     fs.writeFile(notePath, JSON.stringify(content), err => {
         if (err) {
@@ -26,6 +30,8 @@ const saveNotes = (content) => {
     });
 };
 
+/* func to create new note */
+/* функ создания новой заметки */
 const addNote = (id, title, text) => {
     getNotes((notes) => {
         const dublicateNote = notes.find(note => note.title === title);
@@ -44,6 +50,8 @@ const addNote = (id, title, text) => {
     });
 };
 
+/* func to show array of notes */
+/* функ вывода массива заметок в консоль */
 const listNotes = () => {
     getNotes(notes => {
         if (notes.length) {
@@ -58,6 +66,8 @@ const listNotes = () => {
     });
 };
 
+/* func to read one note by id */
+/* функ чтения одно заметки по id */
 const readNote = (id) => {
     getNotes((notes) => {
         const note = notes.find(el => el.id === id);
@@ -70,6 +80,8 @@ const readNote = (id) => {
     });
 };
 
+/* func to remove one note by id */
+/* функ удаления одной заметки по id */
 const removeNote = (id) => {
     getNotes((notes) => {
         const note = notes.find(el => el.id === id);
