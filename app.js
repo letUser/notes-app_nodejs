@@ -41,16 +41,34 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'показать контент заметки',
-    handler(title) {
-        notes.readNote(title);
+    builder: {
+        id: {
+            type: 'string',
+            demandOption: true,
+            describe: 'Номер заметки'
+        }
+    },
+    handler({
+        id
+    }) {
+        notes.readNote(id);
     }
 });
 
 yargs.command({
     command: 'remove',
     describe: 'удаляет заметку',
-    handler() {
-        console.log('remove');
+    builder: {
+        id: {
+            type: 'string',
+            demandOption: true,
+            describe: 'Номер заметки'
+        }
+    },
+    handler({
+        id
+    }) {
+        notes.removeNote(id);
     }
 });
 

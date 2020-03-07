@@ -28,7 +28,6 @@ const saveNotes = (content) => {
 
 const addNote = (id, title, text) => {
     getNotes((notes) => {
-        console.log('addNote', notes);
         const dublicateNote = notes.find(note => note.title === title);
 
         if (dublicateNote) {
@@ -59,16 +58,39 @@ const listNotes = () => {
     });
 };
 
-const readNote = (title) => {
+const readNote = (id) => {
     getNotes((notes) => {
-        const note = notes.find(el => el.title === title);
-        console.log(notes);
-        console.log(chalk.green.inverse(note));
+        const note = notes.find(el => el.id === id);
+
+        if (!note) {
+            console.log(chalk.red.inverse('Заметки не существует'));
+        } else {
+            console.log(chalk.green.inverse(`${note.title}: ${note.text}`));
+        }
+    });
+};
+/* !!!!!!!!! */
+const removeNote = (id) => {
+    getNotes((notes) => {
+        const note = notes.find(el => el.id === id);
+
+        if (!note) {
+            console.log(chalk.red.inverse('Заметки не существует'));
+        } else {
+            notes.splice(indexOf(note), 1);
+            fs.writeFile(notePath, JSON.stringify(notes), err => {
+                if (err) {
+                    throw new Error(err);
+                }
+            });
+            console.log(notes);
+        }
     });
 };
 
 module.exports = {
     addNote,
     listNotes,
-    readNote
+    readNote,
+    removeNote
 };
