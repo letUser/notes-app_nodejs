@@ -23,6 +23,7 @@ const getNotes = (callback) => {
 /* func to re-write notes.json with new notes */
 /* функ перезаписи notes.json обновленным массивом */
 const saveNotes = (content) => {
+    content = content.sort((a, b) => +a.id > +b.id ? 1 : -1); //sort by id //сортируем по id
     fs.writeFile(notePath, JSON.stringify(content), err => {
         if (err) {
             throw new Error(err);
