@@ -47,13 +47,13 @@ const addNote = (id, title, text) => {
 const listNotes = () => {
     getNotes(notes => {
         if (notes.length) {
-            console.log(chalk.inverse('Ваши заметки:'));
+            console.log(chalk.green.inverse('Ваши заметки:'));
 
             notes.forEach((note) => {
                 console.log(`${note.id}: ${note.title}`);
             });
         } else {
-            console.log(chalk.blue('Заметок пока нет. Добавьте первую.'));
+            console.log(chalk.red.inverse('Заметок пока нет. Добавьте первую.'));
         }
     });
 };
@@ -69,7 +69,7 @@ const readNote = (id) => {
         }
     });
 };
-/* !!!!!!!!! */
+
 const removeNote = (id) => {
     getNotes((notes) => {
         const note = notes.find(el => el.id === id);
@@ -77,12 +77,8 @@ const removeNote = (id) => {
         if (!note) {
             console.log(chalk.red.inverse('Заметки не существует'));
         } else {
-            notes.splice(indexOf(note), 1);
-            fs.writeFile(notePath, JSON.stringify(notes), err => {
-                if (err) {
-                    throw new Error(err);
-                }
-            });
+            notes.splice(notes.indexOf(note), 1);
+            saveNotes(notes);
             console.log(notes);
         }
     });
